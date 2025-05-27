@@ -3,9 +3,9 @@ import { NextRequest } from 'next/server';
 
 export async function GET(
    request: NextRequest,
-   { params }: { params: { id: string } }
+   { params }: { params: Promise<{ id: string }> }
 ) {
-   const { id }= await params;
+   const { id } = await params;
    console.log(`[SSE] Starting connection for job: ${id}`);
 
    const encoder = new TextEncoder();
