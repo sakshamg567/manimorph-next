@@ -45,7 +45,7 @@ export function renderWithLatex(text: string) {
                            // This is inline LaTeX
                            try {
                               return <InlineMath key={`inline-${inlineIndex}`} math={inlinePart} />;
-                           } catch (error) {
+                           } catch (err) {
                               return <code key={`inline-${inlineIndex}`}>${inlinePart}$</code>;
                            }
                         }
@@ -56,7 +56,7 @@ export function renderWithLatex(text: string) {
                // This is block LaTeX
                try {
                   return <BlockMath key={`block-${blockIndex}`} math={part} />;
-               } catch (error) {
+               } catch (err) {
                   return <pre key={`block-${blockIndex}`}><code>${part}$</code></pre>;
                }
             }

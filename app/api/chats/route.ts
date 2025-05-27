@@ -1,7 +1,7 @@
 import { getUserChats } from '@/lib/db/dbOps';
 import { auth } from '@/auth';
 
-export async function GET(request: Request) {
+export async function GET() {
    try {
       const session = await auth();
       if (!session || !session.user) {
@@ -9,7 +9,7 @@ export async function GET(request: Request) {
       }
 
       const userId = session.user.email;
-      const chats = await getUserChats(userId);
+      const chats = await getUserChats(userId as string);
 
       return Response.json(chats);
    } catch (error) {

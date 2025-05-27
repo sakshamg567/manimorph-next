@@ -2,12 +2,10 @@
 import { useRef, useState, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea'
 import AnimationIcon from '@mui/icons-material/Animation';
-import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { v4 } from 'uuid'
 import { useSession } from 'next-auth/react'
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { ChatInput } from '@/components/chat/ChatInput';
-
 
 export default function Home() {
   const [inputText, setInputText] = useState('');
