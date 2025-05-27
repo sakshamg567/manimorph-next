@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea'
 import AnimationIcon from '@mui/icons-material/Animation';
 import { useRouter } from 'next/navigation';
@@ -10,12 +10,12 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 export default function Home() {
   const [inputText, setInputText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const textareaRef = useRef(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { data: session, status } = useSession();
   const router = useRouter();
 
   const autoResize = () => {
-    const textarea = textareaRef.current;
+    const textarea: HTMLTextAreaElement | null = textareaRef.current;
     if (!textarea) return;
 
     // Reset height to calculate the new height
@@ -24,11 +24,12 @@ export default function Home() {
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
-  const handleInputChange = (e) => {
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setInputText(e.target.value);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // Submit on Enter key (but not with Shift+Enter for new line)
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -36,7 +37,7 @@ export default function Home() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!inputText.trim() || isSubmitting) return;
