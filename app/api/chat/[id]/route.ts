@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { getChatMessages } from "@/lib/db/dbOps";
 
-export async function GET(req: Request, {params}: {params: {id: string}}) {
+export async function GET(req: Request, {params}: {params: Promise<{id: string}>}) {
    const session = await auth();
    
    if(!session) {
