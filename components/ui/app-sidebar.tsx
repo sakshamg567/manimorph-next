@@ -18,15 +18,15 @@ import { Button } from "./button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./collapsible"
 import { useEffect, useState } from "react"
 
-export function AppSidebar({ userId }) {
-   const [chats, setChats] = useState([]);
+export function AppSidebar({ userId }: {userId: string}) {
+   type Chat = { id: string; title?: string };
+   const [chats, setChats] = useState<Chat[]>([]);
    const [isOpen, setIsOpen] = useState(true);
    const [isLoading, setIsLoading] = useState(true);
 
    useEffect(() => {
       async function fetchChats() {
          try {
-            // Fetch chats from API endpoint instead of direct DB call
             const response = await fetch(`/api/chats?userId=${userId}`);
             if (!response.ok) throw new Error('Failed to fetch chats');
             const data = await response.json();

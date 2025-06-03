@@ -21,7 +21,7 @@ const Navbar = async () => {
                            <TooltipTrigger asChild>
                               <DropdownMenuTrigger asChild>
                                  <Image
-                                    src={session.user.image}
+                                    src={session.user.image as string}
                                     alt="profile"
                                     width={30}
                                     height={30}

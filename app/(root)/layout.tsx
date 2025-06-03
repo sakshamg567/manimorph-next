@@ -12,7 +12,7 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
          <SessionProvider>
             <Navbar />
             <div className="flex flex-row flex-1">
-               {session && session.user && (<AppSidebar userId={session?.user.email} />)}
+               {session && session.user && (<AppSidebar userId={session.user.email as string} />)}
                <main className="relative w-full flex-1 rounded-lg">
                   <div className="absolute inset-0 overflow-auto">
                      {children}
