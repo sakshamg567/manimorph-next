@@ -85,7 +85,7 @@ export default function Chat() {
 
    return (
       <>
-         <div className={`absolute inset-0 rounded-md w-full bg-black text-white flex justify-center overflow-hidden text-sm py-8 px-2 transition-all duration-1000`}>
+         <div className={`absolute inset-0 rounded-md w-full bg text-white flex justify-center overflow-hidden text-sm py-8 pt-14 px-2 transition-all duration-1000`}>
             <div className={`transition-all duration-1000 max-w-3xl flex flex-col h-full ${uiState === "code" || uiState === "video" ? 'w-1/3' : 'w-full'}`}>
                <div className="flex-1 overflow-y-auto overflow-x-hidden mb-4 scrollbar-hide">
                   {messages.map(message => (
