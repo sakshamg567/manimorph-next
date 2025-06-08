@@ -1,6 +1,5 @@
 'use client'
-
-import { ChevronDown, ChevronRight } from "lucide-react"
+import MaterialSymbolsChatAddOn from "../icons/ChatSymbol"
 import {
    Sidebar,
    SidebarContent,
@@ -14,9 +13,8 @@ import {
    SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-import { Button } from "./button"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./collapsible"
 import { useEffect, useState } from "react"
+
 
 export function AppSidebar({ userId }: {userId: string}) {
    type Chat = { id: string; title?: string };
@@ -44,15 +42,16 @@ export function AppSidebar({ userId }: {userId: string}) {
    }, [userId]);
    
    return (
-      <Sidebar side="left" variant="sidebar" className="">
-         <SidebarHeader className="">
-            <Link href={'/'} className="text-center">
-               <p className='text-lg font-bold'>Manimorph</p>
+      <Sidebar side="left" variant="sidebar" className="" collapsible="offcanvas">
+         <SidebarHeader className="pt-4">
+            <Link href={'/'} className="">
+               <span className='text-lg font-bold p-2 hover:bg-zinc-800 rounded-md'>Manimorph</span>
             </Link>
             <Link href={"/"}>
-               <Button className="w-full">
-                  New chat
-               </Button>
+               <div className="flex flex-row place-content-start gap-2 items-center hover:bg-zinc-800 rounded-md p-2">
+                  <MaterialSymbolsChatAddOn/>
+                  <p className="opacity-50">New Chat</p>
+               </div>
             </Link>
          </SidebarHeader>
          <SidebarContent>
@@ -60,20 +59,14 @@ export function AppSidebar({ userId }: {userId: string}) {
                <SidebarGroupLabel>Recent Chats</SidebarGroupLabel>
                <SidebarGroupContent>
                   <SidebarMenu>
-                     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
                         <SidebarMenuItem>
-                           <CollapsibleTrigger className="flex w-full items-center justify-between">
-                              <span>Your Chats</span>
-                              {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-                           </CollapsibleTrigger>
-                           <CollapsibleContent>
                               <SidebarMenuSub>
                                  {isLoading ? (
                                     <SidebarMenuSubItem>Loading chats...</SidebarMenuSubItem>
                                  ) : chats.length > 0 ? (
                                     chats.map((chat) => (
                                        <SidebarMenuSubItem key={chat.id}>
-                                          <Link href={`/chat/${chat.id}`} className="w-full truncate block">
+                                          <Link href={`/chat/${chat.id}`} className="w-full truncate block hover:bg-zinc-800 rounded-md">
                                              <span>{chat.title || 'Untitled Chat'}</span>
                                           </Link>
                                        </SidebarMenuSubItem>
@@ -82,9 +75,7 @@ export function AppSidebar({ userId }: {userId: string}) {
                                     <SidebarMenuSubItem>No chats found</SidebarMenuSubItem>
                                  )}
                               </SidebarMenuSub>
-                           </CollapsibleContent>
                         </SidebarMenuItem>
-                     </Collapsible>
                   </SidebarMenu>
                </SidebarGroupContent>
             </SidebarGroup>

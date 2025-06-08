@@ -1,3 +1,4 @@
+"use server";
 import {Schema, Document, models, model} from 'mongoose';
 import { Chat, Message, MessagePart, User } from './types';
 

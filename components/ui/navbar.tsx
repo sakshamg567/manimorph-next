@@ -1,22 +1,35 @@
+"use client"
 import React from 'react'
 import { Button } from './button'
-import { auth, signIn, signOut } from '@/auth'
+import { signIn, signOut } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './dropdown-menu'
 import { LogOut } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip'
-const Navbar = async () => {
+import { SidebarTrigger, useSidebar } from './sidebar'
 
-   const session = await auth();
+const Navbar = () => {
+   const {state} = useSidebar();
+   const { data: session } = useSession();
 
    return (
-      <header className=' bg-transparent text-white pt-2 px-2 bg-gradient-to-b from-[#121214] to-transparent'>
-         <nav className='flex flex-row place-content-end max-h-8'>
+      <header className='bg-transparent text-white px-4 pt-4 pb-2 z-50 relative pointer-events-auto border-b'>
+         <nav className='flex flex-row justify-between items-center h-8 pointer-events-auto'>
             {session && session?.user ? (
-               <>
-                  <div>
-                  <DropdownMenu>
-                     <TooltipProvider>
+               <TooltipProvider>
+                  <Tooltip>
+                     <TooltipTrigger asChild>
+                        <SidebarTrigger />
+
+                     </TooltipTrigger>
+                     <TooltipContent>
+                        <span>{state === 'collapsed' ? 'Open sidebar' : 'Close sidebar'}</span>
+                     </TooltipContent>
+                  </Tooltip>
+
+                  <div className="pointer-events-auto">
+                     <DropdownMenu>
                         <Tooltip>
                            <TooltipTrigger asChild>
                               <DropdownMenuTrigger asChild>
@@ -25,51 +38,44 @@ const Navbar = async () => {
                                     alt="profile"
                                     width={30}
                                     height={30}
-                                    className="rounded-full cursor-pointer"
+                                    className="rounded-full cursor-pointer hover:ring-2 hover:ring-white/50 transition-all"
                                  />
                               </DropdownMenuTrigger>
                            </TooltipTrigger>
-                           <TooltipContent side='right'>
+                           <TooltipContent side='bottom'>
                               <span>Profile</span>
                            </TooltipContent>
                         </Tooltip>
-                     </TooltipProvider>
 
-                     <DropdownMenuContent className='border-0 w-52'>
-                        <DropdownMenuItem className=''>
-                           <span className='text-xs'>{session.user.email}</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem >
-                           <form action={async () => {
-                              "use server";
-                              await signOut({ redirectTo: "/" });
-                           }}>
-                              <Button>
-                                 <LogOut />
+                        <DropdownMenuContent className='border-0 w-52 z-50'>
+                           <DropdownMenuItem>
+                              <span className='text-xs'>{session.user.email}</span>
+                           </DropdownMenuItem>
+                           <DropdownMenuSeparator />
+                           <DropdownMenuItem>
+                              <Button
+                                 onClick={() => signOut({ callbackUrl: "/" })}
+                                 variant="ghost"
+                                 size="sm"
+                                 className="w-full justify-start p-0 h-auto"
+                              >
+                                 <LogOut className="mr-2 h-4 w-4" />
                                  <span>Log out</span>
                               </Button>
-
-                           </form>
-                        </DropdownMenuItem>
-                     </DropdownMenuContent>
-                  </DropdownMenu>
-                  </div>   
-               </>
-
+                           </DropdownMenuItem>
+                        </DropdownMenuContent>
+                     </DropdownMenu>
+                  </div>
+               </TooltipProvider>
             ) : (
-               <div className='flex flex-row'>
-                  <form action={async () => {
-                     "use server";
-
-                     await signIn("google");
-                  }}>
-                     <Button type='submit' className='bg-white text-black hover:bg-zinc-200 h-7 rounded-sm'>
-                        Sign In
-                     </Button>
-                  </form>
+               <div className='flex flex-row pointer-events-auto'>
+                  <Button
+                     onClick={() => signIn("google")}
+                     className='bg-white text-black hover:bg-zinc-200 h-7 rounded-sm'
+                  >
+                     Sign In
+                  </Button>
                </div>
-
             )}
          </nav>
       </header>

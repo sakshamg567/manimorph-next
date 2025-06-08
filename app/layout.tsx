@@ -15,11 +15,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.className} dark`}>
       <body className="bg-[#0F0F10] text-white h-screen overflow-hidden">
-        <SidebarProvider>
           <main className="fixed inset-0 flex flex-col">
             {children}
           </main>
-        </SidebarProvider>
       </body>
     </html>
   );

@@ -5,8 +5,6 @@ import AnimationIcon from '@mui/icons-material/Animation';
 import { useRouter } from 'next/navigation';
 import { v4 } from 'uuid'
 import { useSession } from 'next-auth/react'
-import { SidebarTrigger } from '@/components/ui/sidebar';
-
 export default function Home() {
   const [inputText, setInputText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -79,27 +77,20 @@ export default function Home() {
 
   return (
     <>
-      <div className="absolute inset-0 rounded-md bg-[#0F0F10] border border-zinc-800 text-white font-geist overflow-hidden text-sm m-2 flex flex-col">
-        {/* Header positioned correctly at the top */}
-        <header className="w-full flex justify-between items-center">
-          <div className="flex items-center">
-            <SidebarTrigger />
-          </div>
-          {/* You can add profile or other elements here if needed */}
-        </header>
-
+      <div className="absolute inset-0 text-white font-geist overflow-hidden text-sm flex flex-col">
         <div className="flex-1 flex justify-center overflow-hidden py-20 px-2">
           <div className="w-full max-w-3xl flex flex-col h-full">
             <div className="flex-1 overflow-y-auto overflow-x-hidden mb-4 scrollbar-hide">
-              <h1 className="text-4xl md:text-5xl font-bold text-center mb-6 pt-32">
+              <h1 className="text-4xl md:text-5xl font-bold text-center mb-6 pt-48">
                 What can I help you visualize?
               </h1>
 
               <form onSubmit={handleSubmit} className="w-full max-w-3xl">
                 <div className="relative justify-center">
                   <Textarea
+                    id='text-area'
                     ref={textareaRef}
-                    className="resize-none max-w-3xl w-full pr-16 overflow-auto max-h-72 border-zinc-800"
+                    className="resize-none max-w-3xl w-full pr-16 overflow-auto max-h-72 border-zinc-600 bg-[#313131]"
                     placeholder="Ask Manimorph to visualize..."
                     value={inputText}
                     onChange={handleInputChange}
